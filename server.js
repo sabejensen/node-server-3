@@ -90,24 +90,6 @@ server.listen(port, () => {
                 )
             })
         })
-        
-        app.options('/edit-team', (req, res, next) => {
-            console.log('PATCH RECEIVED ', req.body.id)
-            db.collection('user-teams').find().toArray()
-            .then(results => {
-                console.log(results)
-                return teamsCollection
-                .updateOne(
-                    results.find(x => x._id == req.body.id),
-                    {
-                        $set: {
-                            name: req.body.name,
-                            team: req.body.team
-                        }
-                    }
-                )
-            })
-        })
 
     })
 
