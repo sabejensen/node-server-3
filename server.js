@@ -10,13 +10,6 @@ const app = express()
 const cors = require('cors')
 const router = express.Router();
 
-app.options('*', (req, res) => {
-    res.json({
-      status: 'OK'
-    });
-  });
-  
-
 const teamRoute = require('./routes/team')
 
 let Team = require('./models/index')
@@ -72,6 +65,10 @@ server.listen(port, () => {
         app.use(bodyParser.json())
 
         app.delete('/delete-team', (req, res, next) => {
+            console.log('DELETION RECEIVED ', req.body.id)
+            deleteTeam(req.body.id)
+        })
+        app.options('/delete-team', (req, res, next) => {
             console.log('DELETION RECEIVED ', req.body.id)
             deleteTeam(req.body.id)
         })
