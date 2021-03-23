@@ -17,6 +17,12 @@ let port = process.env.PORT || 3080;
 
 const mongoConnect = require('./util/database')
 
+app.use((req, res, next) => {
+    res.header("Access-Control-Allow-Origin", "*");
+    res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
+    next();
+  })
+
 app.use(bodyParser.urlencoded({ extended: true }))
 
 const server = http.createServer(app)
