@@ -13,6 +13,8 @@ const teamRoute = require('./routes/team')
 
 let Team = require('./models/index')
 
+let port = process.env.PORT || 3080;
+
 const mongoConnect = require('./util/database')
 
 app.use((req, res, next) => {
@@ -25,7 +27,7 @@ app.use(bodyParser.urlencoded({ extended: true }))
 
 const server = http.createServer(app)
 
-server.listen(process.env.PORT, () => {
+server.listen(port, () => {
     MongoClient.connect('mongodb+srv://pokeadmin:GPzq9oYhFQrEffvU@cluster0.obhnr.mongodb.net/teams?retryWrites=true&w=majority', { useNewUrlParser: true })
     .then((client) => {
         const db = client.db('teams')
@@ -84,51 +86,39 @@ server.listen(process.env.PORT, () => {
         })
 
     })
+
+    for(let i = 1; i < 152; i++) {
+        app.get("/api" + i.toString(), (req, res) => {
+            axios.get('https://pokeapi.co/api/v2/pokemon/' + i.toString())
+            .then(response => {
+                // console.log(response.data);
+                // console.log(response.data);
+                // console.log("THIS RUNS")
+                res.json(response.data);
+            })
+            .catch(error => {
+                console.log(error);
+            })
+            // res.json(pokemon)
+          });
+    }
 })
 
 
 
 
-for(let i = 1; i < 152; i++) {
-    app.get("/api" + i.toString(), (req, res) => {
-        axios.get('https://pokeapi.co/api/v2/pokemon/' + i.toString())
-        .then(response => {
-            // console.log(response.data);
-            // console.log(response.data);
-            // console.log("THIS RUNS")
-            res.json(response.data);
-        })
-        .catch(error => {
-            console.log(error);
-        })
-        // res.json(pokemon)
-      });
-}
-
-const teams = [];
-
-// app.post('/new-team', (req, res, next) => {
-//     // console.log(req.body.team.split(','), req.body.title)
-//     let currentTeam = {
-//         name: req.body.title,
-//         team: req.body.team.split(',')
-//     }
-//     database.collection("teams").insertOne(new Team(currentTeam), (err, res) => {
-//         if(err) throw err;
-//         console.log('Addition Successful')
-//         database.close();
-//     })
-//     res.redirect('/')
-// })
-
-router.route("/add-team").post((req, res) => {
-
-})
-
-// app.get('/new-team', (req, res, next) => {
-//     res.json(teams)
-// })
-
-app.get('/current-team', (req, res, next) => {
-    res.json(database.collection("teams"))
-})
+// for(let i = 1; i < 152; i++) {
+//     app.get("/api" + i.toString(), (req, res) => {
+//         axios.get('https://pokeapi.co/api/v2/pokemon/' + i.toString())
+//         .then(response => {
+//             // console.log(response.data);
+//             // console.log(response.data);
+//             // console.log("THIS RUNS")
+//             res.json(response.data);
+//         })
+//         .catch(error => {
+//             console.log(error);
+//         })
+//         // res.json(pokemon)
+//       });
+// }
