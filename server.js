@@ -13,8 +13,6 @@ const teamRoute = require('./routes/team')
 
 let Team = require('./models/index')
 
-let port = process.env.PORT || 3080;
-
 const mongoConnect = require('./util/database')
 
 app.use((req, res, next) => {
@@ -27,7 +25,7 @@ app.use(bodyParser.urlencoded({ extended: true }))
 
 const server = http.createServer(app)
 
-server.listen(port, () => {
+server.listen(process.env.PORT, () => {
     MongoClient.connect('mongodb+srv://pokeadmin:GPzq9oYhFQrEffvU@cluster0.obhnr.mongodb.net/teams?retryWrites=true&w=majority', { useNewUrlParser: true })
     .then((client) => {
         const db = client.db('teams')
