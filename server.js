@@ -7,7 +7,15 @@ const mongoose = require('mongoose')
 const path = require('path');
 
 const app = express()
+const cors = require('cors')
 const router = express.Router();
+
+const corsOptions = {
+    origin: true,
+    credentials: true
+  }
+
+  app.options('*', cors(corsOptions));
 
 const teamRoute = require('./routes/team')
 
