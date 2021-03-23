@@ -10,12 +10,12 @@ const app = express()
 const cors = require('cors')
 const router = express.Router();
 
-const corsOptions = {
-    origin: true,
-    credentials: true
-  }
-
-  app.options('*', cors(corsOptions));
+app.options('*', (req, res) => {
+    res.json({
+      status: 'OK'
+    });
+  });
+  
 
 const teamRoute = require('./routes/team')
 
